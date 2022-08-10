@@ -1,6 +1,8 @@
 package phonebook;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -11,31 +13,45 @@ public class Main {
 
     static long finishTime;
 
-    public static void main(String[] args) {
-        System.out.println("Start searching...");
-        //create start time in milliseconds
-        startTime = System.currentTimeMillis();
+    static ArrayList<String> find = new ArrayList<>();
 
-        String name = "";
+    static ArrayList<Member> directory = new ArrayList<>();
+
+    public static void main(String[] args) {
+
         File smallFind = new File("d:\\JAVA\\Phone Book\\Phone Book\\task\\src\\phonebook\\small_find.txt");
-        File directory = new File("d:\\JAVA\\Phone Book\\Phone Book\\task\\src\\phonebook\\small_directory.txt");
+        File smallDirectory = new File("d:\\JAVA\\Phone Book\\Phone Book\\task\\src\\phonebook\\small_directory.txt");
+        // create list find
+
         try {
             Scanner scanner = new Scanner(smallFind);
             do {
-                name = scanner.nextLine();
-                Scanner scan = new Scanner(directory);
-                do {
-                    String phone = scan.nextLine();
-                    if (phone.contains(name)) {
-                        count++;
-                        break;
-                    }
-                } while(scan.hasNextLine());
+                find.add(scanner.nextLine());
             } while(scanner.hasNextLine());
-
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+
+        // create list directory
+        try {
+            Scanner scan = new Scanner(smallDirectory);
+            do {
+                Member m = new Member(scan.nextInt(), scan.nextLine());
+                directory.add(m);
+            } while(scan.hasNextLine());
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    static private void startLinearSearch() {
+        System.out.println("Start searching (linear search)...");
+        //create start time in milliseconds
+        startTime = System.currentTimeMillis();
+
+
+
 
         //create finish time in milliseconds;
         finishTime = System.currentTimeMillis();
@@ -61,12 +77,14 @@ public class Main {
 }
 
      class Member implements Comparable<Member> {
+        int phoneNumber;
         String name;
-        String phoneNumber;
 
-        public Member (String name, String phoneNumber) {
-            this.name = name;
+
+        public Member (int phoneNumber, String name) {
             this.phoneNumber = phoneNumber;
+            this.name = name;
+
         }
 
         public String getName() {
