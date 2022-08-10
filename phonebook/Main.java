@@ -100,17 +100,17 @@ public class Main {
 
     static private String convertMsToMin(long startTime, long finishTime) {
         long time = (finishTime - startTime) / 1000 / 60;
-        return  time != 0 ? time + " min." : "";
+        return  time + " min.";
     }
 
     static private String convertMsToSec(long startTime, long finishTime) {
         long time  = (finishTime - startTime) / 1000 % 60;
-        return  time != 0 ? time + " sec." : "";
+        return  time + " sec.";
     }
 
     static private String convertMsToMs(long startTime, long finishTime) {
         long time = (finishTime - startTime) % 1000;
-        return  time != 0 ? time + " ms." : "";
+        return  time + " ms.";
     }
 
 }
