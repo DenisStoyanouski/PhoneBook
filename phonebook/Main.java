@@ -17,8 +17,8 @@ public class Main {
         startTime = System.currentTimeMillis();
 
         String name = "";
-        File smallFind = new File("d:\\JAVA\\Phone Book\\Phone Book\\task\\src\\phonebook\\find.txt");
-        File directory = new File("d:\\JAVA\\Phone Book\\Phone Book\\task\\src\\phonebook\\directory.txt");
+        File smallFind = new File("d:\\JAVA\\Phone Book\\Phone Book\\task\\src\\phonebook\\small_find.txt");
+        File directory = new File("d:\\JAVA\\Phone Book\\Phone Book\\task\\src\\phonebook\\small_directory.txt");
         try {
             Scanner scanner = new Scanner(smallFind);
             do {
@@ -59,4 +59,23 @@ public class Main {
     }
 
 }
+
+     class Member implements Comparable<Member> {
+        String name;
+        String phoneNumber;
+
+        public Member (String name, String phoneNumber) {
+            this.name = name;
+            this.phoneNumber = phoneNumber;
+        }
+
+        public String getName() {
+            return this.name;
+        }
+
+        @Override
+        public int compareTo(Member m) {
+            return this.name.compareTo(m.getName());
+        }
+    }
 
