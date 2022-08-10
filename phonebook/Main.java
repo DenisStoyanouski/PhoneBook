@@ -2,6 +2,7 @@ package phonebook;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Main {
@@ -20,11 +21,12 @@ public class Main {
         createFindList();
         createDirectory();
         startLinearSearch();
+        startBJ();
 
     }
 
     static private void createFindList() {
-        File smallFind = new File("d:\\JAVA\\Phone Book\\Phone Book\\task\\src\\phonebook\\small_find.txt");
+        File smallFind = new File("d:\\JAVA\\Phone Book\\Phone Book\\task\\src\\phonebook\\find.txt");
         try {
             Scanner scanner = new Scanner(smallFind);
             do {
@@ -36,12 +38,12 @@ public class Main {
     }
 
     static private void createDirectory() {
-        File smallDirectory = new File("d:\\JAVA\\Phone Book\\Phone Book\\task\\src\\phonebook\\small_directory.txt");
+        File smallDirectory = new File("d:\\JAVA\\Phone Book\\Phone Book\\task\\src\\phonebook\\directory.txt");
         // create list directory
         try {
             Scanner scan = new Scanner(smallDirectory);
             do {
-                Member m = new Member(scan.nextInt(), scan.nextLine());
+                Member m = new Member(scan.nextInt(), scan.nextLine().trim());
                 directory.add(m);
             } while(scan.hasNextLine());
         } catch (FileNotFoundException e) {
@@ -54,13 +56,46 @@ public class Main {
         //create start time in milliseconds
         startTime = System.currentTimeMillis();
 
-
-
-
+        for(String name : find) {
+            for(Member member : directory) {
+                if (name.equals(member.getName())) {
+                    count++;
+                }
+            }
+        }
         //create finish time in milliseconds;
         finishTime = System.currentTimeMillis();
-        System.out.printf("Found %d/%d entries. Time take: %s %s %s", count, count,
+        System.out.printf("Found %d/%d entries. Time take: %s %s %s%n", count, count,
                 convertMsToMin(startTime,finishTime),convertMsToSec(startTime, finishTime),convertMsToMs(startTime, finishTime));
+    }
+
+    static private void startBJ() {
+        System.out.println("Start searching (bubble sort + jump search)...");
+        //create start time in milliseconds
+        startTime = System.currentTimeMillis();
+        long startSortingTime = System.currentTimeMillis();
+        Collections.sort(find);
+        Collections.sort(directory);
+        long finishSortingTime = System.currentTimeMillis();
+        count = 0;
+        long startSearchingTime = System.currentTimeMillis();
+        for(String name : find) {
+            for(Member member : directory) {
+                if (name.equals(member.getName())) {
+                    count++;
+                }
+            }
+        }
+        long finishSearchingTime = System.currentTimeMillis();
+        //create finish time in milliseconds;
+        finishTime = System.currentTimeMillis();
+
+        System.out.printf("Found %d/%d entries. Time take: %s %s %s%n", count, count,
+                convertMsToMin(startTime,finishTime), convertMsToSec(startTime, finishTime),convertMsToMs(startTime, finishTime));
+
+        System.out.printf("Sorting time: %s %s %s%n", convertMsToMin(startSortingTime, finishSortingTime),convertMsToSec(startSortingTime, finishSortingTime),convertMsToMs(startSortingTime, finishSortingTime));
+
+        System.out.printf("Searching time: %s %s %s%n", convertMsToMin(startSearchingTime,finishSearchingTime),convertMsToSec(startSearchingTime, finishSearchingTime),convertMsToMs(startSearchingTime, finishSearchingTime));
     }
 
     static private String convertMsToMin(long startTime, long finishTime) {
@@ -89,6 +124,10 @@ public class Main {
             this.phoneNumber = phoneNumber;
             this.name = name;
 
+        }
+
+        public int getPhoneNumber() {
+            return this.phoneNumber;
         }
 
         public String getName() {
