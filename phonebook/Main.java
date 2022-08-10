@@ -2,7 +2,6 @@ package phonebook;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -18,11 +17,14 @@ public class Main {
     static ArrayList<Member> directory = new ArrayList<>();
 
     public static void main(String[] args) {
+        createFindList();
+        createDirectory();
+        startLinearSearch();
 
+    }
+
+    static private void createFindList() {
         File smallFind = new File("d:\\JAVA\\Phone Book\\Phone Book\\task\\src\\phonebook\\small_find.txt");
-        File smallDirectory = new File("d:\\JAVA\\Phone Book\\Phone Book\\task\\src\\phonebook\\small_directory.txt");
-        // create list find
-
         try {
             Scanner scanner = new Scanner(smallFind);
             do {
@@ -31,7 +33,10 @@ public class Main {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+    }
 
+    static private void createDirectory() {
+        File smallDirectory = new File("d:\\JAVA\\Phone Book\\Phone Book\\task\\src\\phonebook\\small_directory.txt");
         // create list directory
         try {
             Scanner scan = new Scanner(smallDirectory);
@@ -42,7 +47,6 @@ public class Main {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     static private void startLinearSearch() {
