@@ -18,8 +18,11 @@ public class Main {
 
     static Map<Integer, Integer> hashtable = new HashMap<>();
 
-    Path pathToSmallFind = Paths.get("d:"+File.separator+"JAVA"+File.separator+"Phone Book"+File.separator+
+    static final Path pathToFind = Paths.get("d:"+File.separator+"JAVA"+File.separator+"Phone Book"+File.separator+
             "Phone Book"+File.separator+"task"+File.separator+"src"+File.separator+"phonebook"+File.separator+"find.txt");
+
+    static final Path pathToDirectory = Paths.get("d:"+File.separator+"JAVA"+File.separator+"Phone Book"+File.separator+
+            "Phone Book"+File.separator+"task"+File.separator+"src"+File.separator+"phonebook"+File.separator+"directory.txt");
 
     public static void main(String[] args) {
         createFindList();
@@ -32,9 +35,9 @@ public class Main {
     }
 
     static private void createFindList() {
-        File smallFind = new File("d:\\JAVA\\Phone Book\\Phone Book\\task\\src\\phonebook\\find.txt");
-        try {
-            Scanner scanner = new Scanner(smallFind);
+        // create list find
+        try (Scanner scanner = new Scanner(pathToFind.toFile()))
+        {
             do {
                 find.add(scanner.nextLine());
             } while(scanner.hasNextLine());
@@ -44,10 +47,9 @@ public class Main {
     }
 
     static private void createDirectory() {
-        File smallDirectory = new File("d:\\JAVA\\Phone Book\\Phone Book\\task\\src\\phonebook\\directory.txt");
         // create list directory
-        try {
-            Scanner scan = new Scanner(smallDirectory);
+        try (Scanner scan = new Scanner(pathToDirectory.toFile()))
+        {
             do {
                 Member m = new Member(scan.nextInt(), scan.nextLine().trim());
                 directory.add(m);
