@@ -1,5 +1,7 @@
 package phonebook;
 
+import lombok.*;
+
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -229,28 +231,17 @@ public class Main {
 
 }
 
-     class Member implements Comparable<Member> {
-        int phoneNumber;
+     @AllArgsConstructor
+     @Getter
+     @EqualsAndHashCode
+     class Member implements Comparable<Member>{
+
+        @EqualsAndHashCode.Exclude int phoneNumber;
         String name;
 
-
-        public Member (int phoneNumber, String name) {
-            this.phoneNumber = phoneNumber;
-            this.name = name;
-
-        }
-
-        public int getPhoneNumber() {
-            return this.phoneNumber;
-        }
-
-        public String getName() {
-            return this.name;
-        }
-
-        @Override
-        public int compareTo(Member m) {
-            return this.name.compareTo(m.getName());
-        }
-    }
+         @Override
+         public int compareTo(Member member) {
+             return this.name.compareTo(member.getName());
+         }
+     }
 
